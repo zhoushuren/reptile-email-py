@@ -13,6 +13,8 @@ def main():
     url = Url()
     # newUrl = 'https://tieba.baidu.com/p/4918734951?pn=2' # test
     newUrl = url.getNewUrl(1)
+    if(newUrl is None):
+        return
     # print newUrl
     s,nextUrl = getBaidu(newUrl)
     # print s

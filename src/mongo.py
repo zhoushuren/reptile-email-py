@@ -23,8 +23,14 @@ class Url():
 
     def getNewUrl(self,type):
 
-        list = urllib.count()
+        count = urllib.count()
+        print count
+        if (count== 0):
+            print "没有url鸟"
+            return
+
         list = urllib.find({"type":type}).sort("update_time").limit(1)
+
         # print list[0].get('url')
         self.thisUrl = list[0].get('url')
         return list[0].get('url')
