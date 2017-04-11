@@ -1,9 +1,6 @@
 # encoding=utf-8
 from pymongo import *
 import pymongo
-
-import pprint
-import json
 import time
 client = MongoClient()
 
