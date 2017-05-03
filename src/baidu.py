@@ -29,5 +29,5 @@ def main():
 
 # main()    #保守的爬，100秒一次，这里可以控制速度
 while(True):
-    time.sleep(100)
+    time.sleep(3)
     main()

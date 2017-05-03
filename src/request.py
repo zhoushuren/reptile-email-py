@@ -52,3 +52,12 @@ def parseBaidu(text):
         if(val not in s):
             s.add(val)
     return s,pageNum
+
+def reqDouban(url):
+    header = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Cookie': 'TIEBA_USERTYPE=23fdbb361380878070691806; bdshare_firstime=1474861285905; Hm_lvt_287705c8d9e2073d13275b18dbd746dc=1482850292,1482850327,1482850532,1482850569; BDUSS=lBURmlySTdock5UclFLLU85ZE54NVp5bklBSy1yflhBQTZVUGtFbkh4b2ZoSmxZSVFBQUFBJCQAAAAAAAAAAAEAAADBLM4WwMPSttfT0rvGrAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB~3cVgf93FYM; STOKEN=557107e8dd3128a8347e7d06d0c7cb09df019f2b9c8c8db9830ee13a6abab4f4; TIEBAUID=83f4b7179f8aeee39cb626b5; BAIDUID=C17787A1E42B2D4EF1ACF2655D088176:FG=1; PSTM=1485230263; BIDUPSID=E4C79AC24E4807BC0807F3ABE82BD396; MCITY=-289%3A; BDRCVFR[feWj1Vr5u3D]=I67x6TjHwwYf0; PSINO=1; H_PS_PSSID=1429_21094_21942_21801_22026; wise_device=0',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36',
+    }
+
+    return requests.get(url,headers=header,verify=False)
