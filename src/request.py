@@ -7,26 +7,19 @@ def getBaidu(url):
     text = reqBaidu(url)
     s, pageNum =  parseBaidu(text)
     nextUrl = url
-
     startUrl_model = url.split('=')
-
     if(len(startUrl_model) == 2 and  pageNum <= int(startUrl_model[1])):
         return s, nextUrl
 
     if(pageNum>1 ):
-
         _startUrl_model = startUrl_model[0]
-
         if(len(startUrl_model) ==1):
             nextUrl = _startUrl_model + '?pn=' + str(2)
         elif(startUrl_model[1] != pageNum):
             num = int(startUrl_model[1])
             num = num +1
             nextUrl =   _startUrl_model + '=' + str(num)
-
     return s,nextUrl
-
-
 
 def reqBaidu(url):
     header = {
@@ -37,7 +30,6 @@ def reqBaidu(url):
 
     return requests.get(url,headers=header,verify=False)
     # return requests.get(url,headers=header)
-
 def parseBaidu(text):
     tree = html.fromstring(text.content)
     pageNumHtml = tree.xpath('//*[@id="thread_theme_7"]/div[1]/ul/li[2]/span[2]/text()')   # 选取分页数，贴吧太变态，选取分页数才是最明智的
