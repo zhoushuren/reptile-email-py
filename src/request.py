@@ -45,6 +45,8 @@ def parseBaidu(text):
             s.add(val)
     return s,pageNum
 
+
+# douban requests
 def reqDouban(url):
     header = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -53,3 +55,36 @@ def reqDouban(url):
     }
 
     return requests.get(url,headers=header,verify=False)
+
+def parseDouban(text):
+    tree = html.fromstring(text.content)
+    pageNumHtml = tree.xpath('//*[@id="thread_theme_7"]/div[1]/ul/li[2]/span[2]/text()')   # 选取分页数，贴吧太变态，选取分页数才是最明智的
+    pageNum = int(pageNumHtml[0])
+
+    regex = re.compile(r"\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b", re.IGNORECASE)
+    result = str(re.findall(regex, text.content)).replace("']", '').replace("['", '').replace("[]", '').replace("', '", ',').replace("[u'", '').replace("u", '')
+
+    res = result.split(',')
+    s = set()
+    for val in res:
+        if(val not in s):
+            s.add(val)
+    return s,pageNum
+
+def getDouban(url):
+    text = reqDouban(url)
+    s, pageNum =  parseDouban(text)
+    nextUrl = url
+    startUrl_model = url.split('=')
+    if(len(startUrl_model) == 2 and  pageNum <= int(startUrl_model[1])):
+        return s, nextUrl
+
+    if(pageNum>1 ):
+        _startUrl_model = startUrl_model[0]
+        if(len(startUrl_model) ==1):
+            nextUrl = _startUrl_model + '?pn=' + str(2)
+        elif(startUrl_model[1] != pageNum):
+            num = int(startUrl_model[1])
+            num = num +1
+            nextUrl =   _startUrl_model + '=' + str(num)
+    return s,nextUrl
